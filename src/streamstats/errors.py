@@ -7,7 +7,7 @@ class UnsupportedFormatError(StreamStatsError):
 class InvalidEventError(StreamStatsError):
     pass
 
-class InvalidTimestampError(StreamStatsError):
+class InvalidTimestampError(InvalidEventError):
     pass
 
 class CLIConfigError(StreamStatsError):
