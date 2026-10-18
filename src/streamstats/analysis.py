@@ -47,7 +47,7 @@ class Accumulator:
         return sorted(self.error_sources.items(), key=lambda el: (-el[1], el[0]))[:5]
 
 
-def analyse_events(paths: list[str], fmt: str, skip_invalid: bool = False) -> Accumulator:
+def analyze_events(paths: list[str], fmt: str, skip_invalid: bool) -> Accumulator:
     acc = Accumulator()
     for path in paths:
         for event in iter_events(path, fmt, skip_invalid, acc.add_skip):

@@ -51,7 +51,7 @@ def validate_record(record: dict[str, Any]) -> Event:
     return Event(timestamp, level, source, message)
 
 
-def iter_events(path: str, fmt: str, skip_invalid: bool = False, on_skip: Callable[[], None] | None = None) -> Iterator[Event]:
+def iter_events(path: str, fmt: str, skip_invalid: bool, on_skip: Callable[[], None] | None = None) -> Iterator[Event]:
     if (fmt == "csv"):
         parser = parse_csv
     else:
