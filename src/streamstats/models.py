@@ -4,7 +4,7 @@ from enum import Enum, auto
 from typing import Any
 
 from streamstats.errors import InvalidEventError, InvalidTimestampError
-from streamstats.parsers import parse_csv, parse_jsonl
+from streamstats.parsers import get_parser
 
 
 class Level(Enum):
@@ -48,21 +48,20 @@ def validate_record(record: dict[str, Any]) -> Event:
     if not isinstance(message, str):
         raise InvalidEventError(f"Некорректный message: {message!r}")
 
-    return Event(timestamp, level, source, message)
+    return Event(timestamp, level, source.strip(), message.strip())
 
 
 def iter_events(path: str, fmt: str, skip_invalid: bool, on_skip: Callable[[], None] | None = None) -> Iterator[Event]:
-    if (fmt == "csv"):
-        parser = parse_csv
-    else:
-        parser = parse_jsonl
-
-    for line_num, record in parser(path):
+    for line_num, record in get_parser(fmt)(path):
         try:
-            yield validate_record(record)
-        except InvalidEventError as e:
+            if isinstance(record, InvalidEventError):
+                raise record
+            event = validate_record(record)
+        except InvalidEventError as err:
             if not skip_invalid:
-                raise InvalidEventError(f"{path}:{line_num}: {e}")
+                raise InvalidEventError(f"{path}:{line_num}: {err}") from err
             # todo: log this
             if on_skip:
                 on_skip()
+        else:
+            yield event

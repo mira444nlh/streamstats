@@ -1,11 +1,14 @@
 class StreamStatsError(Exception):
     pass
 
-class InvalidFormatError(StreamStatsError):
+class UnsupportedFormatError(StreamStatsError):
     pass
 
 class InvalidEventError(StreamStatsError):
     pass
 
 class InvalidTimestampError(InvalidEventError):
+    pass
+
+class CLIConfigError(StreamStatsError):
     pass
