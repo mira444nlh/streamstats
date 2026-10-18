@@ -5,6 +5,7 @@ from streamstats.models import Event, Level, iter_events
 
 class Accumulator:
     def __init__(self) -> None:
+        self.total_acc: int = 0
         self.skipped_acc: int = 0
         self.level_acc: dict[Level, int] = {
             Level.DEBUG: 0,
@@ -19,6 +20,7 @@ class Accumulator:
         self.last_timestamp: datetime | None = None
 
     def add(self, event: Event) -> None:
+        self.total_acc += 1
         self.level_acc[event.level] += 1
 
         if event.source in self.source_acc:

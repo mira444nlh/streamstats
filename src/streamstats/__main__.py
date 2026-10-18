@@ -1,10 +1,11 @@
-# from streamstats.analysis import analyse_events
+from streamstats.analysis import analyse_events
+from streamstats.report import print_report
 
 
 def main() -> None:
-    pass
-    # data = analyse_events([".data/events_ok.csv"], "csv")
-    # print(data.get_top5_sources(), data.first_timestamp, data.last_timestamp, data.level_acc)
+    data = analyse_events([".data/events_ok.csv"], "csv")
+    print_report(data)
+
 
 if __name__ == "__main__":
     main()
