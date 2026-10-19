@@ -14,7 +14,7 @@ def print_report(acc: Accumulator, output: str | None = None) -> None:
         "first_timestamp": str(acc.first_timestamp),
         "last_timestamp": str(acc.last_timestamp)
     }
-    report_text = json.dumps(acc_dict, ensure_ascii=False)
+    report_text = json.dumps(acc_dict, indent=2, ensure_ascii=False)
     if output:
         with Path(output).open(mode='w', encoding="utf-8") as out:
             print(report_text, file=out)

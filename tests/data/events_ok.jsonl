@@ -1,0 +1,6 @@
+{"timestamp": "2026-10-07T12:10:00+03:00", "level": "INFO", "source": "web", "message": "Request ok"}
+{"timestamp": "2026-10-07T12:11:00+03:00", "level": "ERROR", "source": "db", "message": "Deadlock"}
+{"timestamp": "2026-10-07T12:12:00+03:00", "level": "ERROR", "source": "auth", "message": "Invalid signature"}
+{"timestamp": "2026-10-07T08:55:00+00:00", "level": "WARNING", "source": "loader", "message": "Retry"}
+{"timestamp": "2026-10-07T12:13:00+03:00", "level": "CRITICAL", "source": "web", "message": "Out of memory"}
+{"timestamp": "2026-10-07T12:14:00+03:00", "level": "INFO", "source": "scheduler", "message": "Job done"}

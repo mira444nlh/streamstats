@@ -1,1 +1,0 @@
-{"total": 6, "skipped": 0, "levels": {"DEBUG": 0, "INFO": 2, "WARNING": 1, "ERROR": 2, "CRITICAL": 1}, "sources": {"web": 2, "db": 1, "auth": 1, "loader": 1, "scheduler": 1}, "top_error_sources": [["auth", 1], ["db", 1], ["web", 1]], "first_timestamp": "2026-10-07 08:55:00+00:00", "last_timestamp": "2026-10-07 12:14:00+03:00"}

@@ -1,6 +1,8 @@
+import logging
 from collections.abc import Callable, Iterator
 from datetime import datetime
 from enum import Enum, auto
+from pathlib import Path
 from typing import Any
 
 from streamstats.errors import InvalidEventError, InvalidTimestampError
@@ -51,7 +53,8 @@ def validate_record(record: dict[str, Any]) -> Event:
     return Event(timestamp, level, source.strip(), message.strip())
 
 
-def iter_events(path: str, fmt: str, skip_invalid: bool, on_skip: Callable[[], None] | None = None) -> Iterator[Event]:
+def iter_events(path: Path, fmt: str, skip_invalid: bool = False, on_skip: Callable[[], None] | None = None) -> Iterator[Event]:
+    logger = logging.getLogger(__name__)
     for line_num, record in get_parser(fmt)(path):
         try:
             if isinstance(record, InvalidEventError):
@@ -60,7 +63,7 @@ def iter_events(path: str, fmt: str, skip_invalid: bool, on_skip: Callable[[], N
         except InvalidEventError as err:
             if not skip_invalid:
                 raise InvalidEventError(f"{path}:{line_num}: {err}") from err
-            # todo: log this
+            logger.warning("%s:%d: пропущена строка: %s", path, line_num, err)
             if on_skip:
                 on_skip()
         else:

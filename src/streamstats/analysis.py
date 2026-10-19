@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 
 from streamstats.models import Event, Level, iter_events
 
@@ -43,11 +44,11 @@ class Accumulator:
     def add_skip(self) -> None:
         self.skipped_acc += 1
 
-    def get_top5_sources(self) -> list[tuple[str, int]]:
-        return sorted(self.error_sources.items(), key=lambda el: (-el[1], el[0]))[:5]
+    def get_top5_sources(self) -> dict[str, int]:
+        return dict(sorted(self.error_sources.items(), key=lambda el: (-el[1], el[0]))[:5])
 
 
-def analyze_events(paths: list[str], fmt: str, skip_invalid: bool) -> Accumulator:
+def analyze_events(paths: list[Path], fmt: str, skip_invalid: bool) -> Accumulator:
     acc = Accumulator()
     for path in paths:
         for event in iter_events(path, fmt, skip_invalid, acc.add_skip):

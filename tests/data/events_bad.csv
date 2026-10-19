@@ -1,0 +1,8 @@
+timestamp,level,source,message
+2026-10-07T09:00:00+00:00,INFO,loader,Valid row
+2026-10-07T09:01:00+00:00,INFO,,Empty source
+2026-10-07T09:02:00+00:00,TRACE,loader,Unknown level
+not-a-date,ERROR,db,Bad timestamp
+2026-10-07T09:04:00+00:00,ERROR,db,Valid row
+2026-10-07T09:05:00+00:00,INFO,loader
+2026-10-07T09:06:00+00:00,WARNING,web,Valid row

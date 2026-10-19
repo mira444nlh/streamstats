@@ -1,0 +1,9 @@
+timestamp,level,source,message
+2026-10-07T09:00:00+00:00,INFO,loader,Start reading
+2026-10-07T09:00:05+00:00,DEBUG,loader,Opened file
+2026-10-07T09:01:00+00:00,ERROR,db,Connection failed
+2026-10-07T09:02:00+00:00,ERROR,db,Timeout
+2026-10-07T09:03:00+00:00,CRITICAL,auth,Token store down
+2026-10-07T09:04:00+00:00,WARNING,web,Slow response
+2026-10-07T09:05:00+00:00,ERROR,web,500 returned
+2026-10-07T09:06:00+00:00,INFO,web,Request ok
