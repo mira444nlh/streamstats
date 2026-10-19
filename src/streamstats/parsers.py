@@ -1,6 +1,6 @@
 import csv
 import json
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import Any
 
@@ -8,6 +8,7 @@ from streamstats.errors import InvalidEventError, UnsupportedFormatError
 
 
 def parse_csv(path: Path) -> Iterator[tuple[int, dict[str, Any]]]:
+    """Parse a CSV file with a header row."""
     with path.open(encoding="utf-8", newline="") as file:
         reader = csv.DictReader(file)
         for record in reader:
@@ -15,6 +16,7 @@ def parse_csv(path: Path) -> Iterator[tuple[int, dict[str, Any]]]:
 
 
 def parse_jsonl(path: Path) -> Iterator[tuple[int, dict[str, Any] | InvalidEventError]]:
+    """Parse a JSON Lines file."""
     with path.open(encoding="utf-8") as file:
         for line_num, text in enumerate(file, start=1):
             if not text.strip():
@@ -31,7 +33,8 @@ def parse_jsonl(path: Path) -> Iterator[tuple[int, dict[str, Any] | InvalidEvent
             yield line_num, record
 
 
-def get_parser(fmt: str):
+def get_parser(fmt: str) -> Callable[[Path], Iterator[tuple[int, dict[str, Any]]] | Iterator[tuple[int, dict[str, Any] | InvalidEventError]]]:
+    """Return the parser function for the given input format."""
     parsers = {"csv": parse_csv, "jsonl": parse_jsonl}
     try:
         return parsers[fmt]

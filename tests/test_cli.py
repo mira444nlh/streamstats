@@ -4,7 +4,9 @@ import sys
 from datetime import UTC, datetime
 
 
-def run_cli(*args):
+def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
+    """Runs `python -m streamstats <args>` and returns the result."""
+
     return subprocess.run(
         [sys.executable, "-m", "streamstats", "analyze", *map(str, args)],
         capture_output=True, text=True, encoding="utf-8", check=False

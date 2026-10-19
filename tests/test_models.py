@@ -8,7 +8,9 @@ from streamstats.errors import (
 from streamstats.models import Event, Level, iter_events, validate_record
 
 
-def make_record(**changes):
+def make_record(**changes: str) -> dict[str, str]:
+    """Creates a log record dict, overriding the default fields with the provided arguments."""
+
     record = {
         "timestamp": "2026-10-07T09:00:00+00:00",
         "level": "INFO",

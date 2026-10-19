@@ -5,6 +5,8 @@ from streamstats.analysis import Accumulator
 
 
 def print_report(acc: Accumulator, output: str | None = None) -> None:
+    """Serialize the statistics as JSON and write them out."""
+
     acc_dict = {
         "total": acc.total_acc,
         "skipped": acc.skipped_acc,

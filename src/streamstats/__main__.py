@@ -9,6 +9,8 @@ from streamstats.report import print_report
 
 
 def main() -> int:
+    """Run the ``analyze`` command and configure logging."""
+
     logging.basicConfig(
         stream=sys.stderr,
         level=logging.INFO,

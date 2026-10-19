@@ -10,6 +10,8 @@ from streamstats.parsers import get_parser
 
 
 class Level(Enum):
+    """Event levels."""
+
     DEBUG = auto()
     INFO = auto()
     WARNING = auto()
@@ -18,7 +20,10 @@ class Level(Enum):
 
 
 class Event:
+    """A single validated log event."""
+
     def __init__(self, timestamp: datetime, level: Level, source: str, message: str):
+        """Create an event from already validated values."""
         self.timestamp: datetime = timestamp
         self.level: Level = level
         self.source: str = source
@@ -26,6 +31,8 @@ class Event:
 
 
 def validate_record(record: dict[str, Any]) -> Event:
+    """Validate a raw record and convert it to an :class:`Event`."""
+
     required_fields = ("timestamp", "level", "source", "message")
     missing = [field for field in required_fields if record.get(field) is None]
     if missing:
@@ -54,6 +61,7 @@ def validate_record(record: dict[str, Any]) -> Event:
 
 
 def iter_events(path: Path, fmt: str, skip_invalid: bool = False, on_skip: Callable[[], None] | None = None) -> Iterator[Event]:
+    """Read a file and yield validated events one by one."""
     logger = logging.getLogger(__name__)
     for line_num, record in get_parser(fmt)(path):
         try:

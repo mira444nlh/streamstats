@@ -5,7 +5,11 @@ from streamstats.models import Event, Level, iter_events
 
 
 class Accumulator:
+    """Running statistics over a stream of events."""
+
     def __init__(self) -> None:
+        """Create an empty accumulator."""
+
         self.total_acc: int = 0
         self.skipped_acc: int = 0
         self.level_acc: dict[Level, int] = {
@@ -21,6 +25,8 @@ class Accumulator:
         self.last_timestamp: datetime | None = None
 
     def add(self, event: Event) -> None:
+        """Update all counters with one event."""
+
         self.total_acc += 1
         self.level_acc[event.level] += 1
 
@@ -42,13 +48,17 @@ class Accumulator:
             self.last_timestamp = event.timestamp
 
     def add_skip(self) -> None:
+        """Count one skipped invalid line."""
         self.skipped_acc += 1
 
     def get_top5_sources(self) -> dict[str, int]:
+        """Return the five sources with the most ``ERROR``/``CRITICAL`` events."""
         return dict(sorted(self.error_sources.items(), key=lambda el: (-el[1], el[0]))[:5])
 
 
 def analyze_events(paths: list[Path], fmt: str, skip_invalid: bool) -> Accumulator:
+    """Analyze one or more files with a single shared accumulator."""
+
     acc = Accumulator()
     for path in paths:
         for event in iter_events(path, fmt, skip_invalid, acc.add_skip):

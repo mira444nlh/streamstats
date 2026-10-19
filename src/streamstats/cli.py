@@ -5,11 +5,16 @@ from streamstats.errors import CLIConfigError
 
 
 class StreamStatsParser(argparse.ArgumentParser):
+    """Argument parser that reports errors as exceptions."""
+
     def error(self, message):
+        """Raise :class:`CLIConfigError` instead of exiting."""
+
         raise CLIConfigError(message)
 
 
 def parse_arguments() -> argparse.Namespace:
+    """Define the ``analyze`` command and parse arguments."""
     parser = StreamStatsParser(description="Потоковый анализатор файлов")
 
     subparsers = parser.add_subparsers(dest="command", required=True, help="Доступные команды")
@@ -46,6 +51,7 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def check_arguments(args: argparse.Namespace) -> None:
+    """Check what ``argparse`` cannot check by itself."""
     for input in args.input:
         if not Path(input).is_file():
             raise CLIConfigError(f"Входной файл не найден: {input}")
